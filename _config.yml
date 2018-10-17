@@ -24,9 +24,16 @@ github_username:  jpasini
 
 # Build settings
 markdown: kramdown
+# worked easily:
 #theme: minima
-#theme: jekyll-theme-midnight
 remote_theme: yous/whiteglass
+#remote_theme: broccolini/swiss
+#theme_color: white
+# did not work:
+#remote_theme: adueck/good-clean-read
+#remote_theme: janczizikow/sleek
+#remote_theme: swanson/lagom
+
 
 plugins:
   - jekyll-archives
