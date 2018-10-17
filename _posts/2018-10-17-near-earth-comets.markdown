@@ -12,14 +12,9 @@ Now let's see how hard it is to embed that same D3 code in a Jekyll post.
 
 [comets-gist]: https://bl.ocks.org/jpasini/0a74c644d4f7d776b1768f0bc132f5e6
 
-
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
-    <title>Near-Earth Comets - Orbital Elements</title>
     <style>
       @import url('https://fonts.googleapis.com/css?family=Roboto');
       body {
@@ -64,9 +59,7 @@ Now let's see how hard it is to embed that same D3 code in a Jekyll post.
         fill: #666;
       }
     </style>
-  </head>
-  <body>
-    <svg width="960" height="500"></svg>
+    <svg width="600" height="500"></svg>
     <script>
       const xValue = d => d.e;
       const yValue = d => d['i (deg)'];
@@ -204,5 +197,4 @@ Now let's see how hard it is to embed that same D3 code in a Jekyll post.
         		.attr('class','r-legend');
       });
     </script>
-  </body>
 </html>
