@@ -25,7 +25,8 @@ github_username:  jpasini
 # Build settings
 markdown: kramdown
 #theme: minima
-theme: jekyll-theme-midnight
+#theme: jekyll-theme-midnight
+remote_theme: yous/whiteglass
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
