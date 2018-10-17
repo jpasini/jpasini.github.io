@@ -161,7 +161,7 @@ Now let's see how hard it is to embed that same D3 code in a Jekyll post.
         return d;
       };
 
-      d3.csv('/comets.csv', row, data => {
+      d3.csv('/data/comets.csv', row, data => {
         console.log(data);
         
         xScale
