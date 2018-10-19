@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Brief musings on near-Earth comets"
-date:   2018-10-16 22:36:15 -0400
+date:   2018-10-17
 categories: d3 visualization astronomy
 ---
 
