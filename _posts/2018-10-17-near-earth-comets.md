@@ -2,7 +2,10 @@
 layout: post
 title:  "Brief musings on near-Earth comets"
 date:   2018-10-17
-categories: d3 visualization astronomy
+tags:
+  - D3
+  - visualization
+  - astronomy
 ---
 
 Here's a scatterplot of near-Earth comets (data source: [NASA](https://data.nasa.gov/Space-Science/Near-Earth-Comets-Orbital-Elements/b67r-rgxc)). We see that orbits with small eccentricity tend to lie close to the ecliptic, while more eccentric orbits seem to lie on random planes (see [diagram](http://farside.ph.utexas.edu/teaching/celestial/Celestialhtml/node34.html) for terminology). This could be because the more eccentric objects were captured, whereas the others formed with the Solar System. Another hint that this is the case: inclination is not only closer to zero, but also *note the absence of dots near 180 degrees*, so they're orbiting in the same direction as all the planets.
