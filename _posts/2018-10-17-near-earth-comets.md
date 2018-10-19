@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "Near-Earth Comets"
+title:  "Brief musings on near-Earth comets"
 date:   2018-10-16 22:36:15 -0400
 categories: d3 visualization astronomy
 ---
 
-Here's a scatterplot of Near-Earth Comets (data source: [NASA](https://data.nasa.gov/Space-Science/Near-Earth-Comets-Orbital-Elements/b67r-rgxc)). We see that orbits with small eccentricity tend to lie close to the ecliptic, while more eccentric orbits seem to lie on random planes (see [diagram](http://farside.ph.utexas.edu/teaching/celestial/Celestialhtml/node34.html) for terminology). This could be because the more eccentric objects were captured, whereas the others formed with the Solar System. Another hint that this is the case is that inclination is not only closer to zero, but *also only under 90 degrees*, meaning that they're orbiting in the same direction as Earth and most planets.
+Here's a scatterplot of near-Earth comets (data source: [NASA](https://data.nasa.gov/Space-Science/Near-Earth-Comets-Orbital-Elements/b67r-rgxc)). We see that orbits with small eccentricity tend to lie close to the ecliptic, while more eccentric orbits seem to lie on random planes (see [diagram](http://farside.ph.utexas.edu/teaching/celestial/Celestialhtml/node34.html) for terminology). This could be because the more eccentric objects were captured, whereas the others formed with the Solar System. Another hint that this is the case is that inclination is not only closer to zero, but *also only under 90 degrees*, meaning that they're orbiting in the same direction as Earth and most planets.
 
 
 <div>
@@ -186,6 +186,8 @@ Here's a scatterplot of Near-Earth Comets (data source: [NASA](https://data.nasa
     </script>
 </div>
 
-After I plotted this I noticed a bunch of points that seemed to lie on a straight line in this space (red dots). Checking the data showed that these are fragments of [Schwassmann-Wachmann 3](https://en.wikipedia.org/wiki/73P/Schwassmann%E2%80%93Wachmann), a comet that is disintegrating. It's interesting what a visualization can reveal. Before plotting this I'd never heard of this comet. I suspect a simple model of disintegration will explain this. I'd like to come back to this someday.
+After I plotted this I noticed a bunch of points that seemed to lie on a straight line in this space (red dots). Checking the data showed that these are fragments of [Schwassmann-Wachmann 3](https://en.wikipedia.org/wiki/73P/Schwassmann%E2%80%93Wachmann), a comet that is disintegrating. It's interesting what a visualization can reveal. Before plotting this I'd never heard of this comet. I suspect a simple model of disintegration will explain this. 
+
+I'd like to come back to this someday.
 
 
