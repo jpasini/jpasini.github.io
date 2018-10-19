@@ -5,55 +5,46 @@ date:   2018-10-16 22:36:15 -0400
 categories: d3 visualization astronomy
 ---
 
-Last year I started playing around with D3. I created this simple [scatterplot][comets-gist] showing two orbital parameters of near-Eart comets.
-
-Now let's see how hard it is to embed that same D3 code in a Jekyll post.
+Here's a scatterplot of Near-Earth Comets (data source: [NASA](https://data.nasa.gov/Space-Science/Near-Earth-Comets-Orbital-Elements/b67r-rgxc)). We see that orbits with small eccentricity tend to lie close to the ecliptic, while more eccentric orbits seem to lie on random planes (see [diagram](http://farside.ph.utexas.edu/teaching/celestial/Celestialhtml/node34.html) for terminology). This could be because the more eccentric objects were captured, whereas the others formed with the Solar System. Another hint that this is the case is that inclination is not only closer to zero, but *also only under 90 degrees*, meaning that they're orbiting in the same direction as Earth and most planets.
 
 
-[comets-gist]: https://bl.ocks.org/jpasini/0a74c644d4f7d776b1768f0bc132f5e6
-
-<html>
+<div>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
     <style>
-      body {
-        margin: 0px;
-      }
       .tick {
         font-size: 2em;
       }
       .axis line {
-        stroke: #ccc;
+        stroke: #ddd;
       }
       .axis text {
         fill: #666;
       }
       .axis-label {
         fill: #666;
-        font-size: 2.5em;
+        font-size: 2em;
       }
       .comet {
-        opacity: 0.4;
+        opacity: 0.3;
       }
       .comet:hover {
         opacity: 1;
         fill: #ffa251;
       }
-      .schwassman {
+      .schwassmann {
         opacity: 0.7;
       }
       .long {
-        opacity: 0.5;
+        opacity: 0.4;
       }
       .plotTitle {
-        font-size: 2em;
-        fill: #666;
-      }
-      .legend-label {
+        font-size: 1.5em;
         fill: #666;
       }
       .color-legend, .r-legend {
-        font-size: 1.2em;
+        font-size: 1em;
         fill: #666;
       }
     </style>
@@ -65,12 +56,12 @@ Now let's see how hard it is to embed that same D3 code in a Jekyll post.
       const colorValue = d => d.type;
       
       const xLabel = 'Eccentricity';
-      const yLabel = 'Inclination to ecliptic (deg)';
+      const yLabel = 'Inclination to ecliptic (degrees)';
       const rLabel = 'Period (yrs)';
       
       const period_limit = 15;
       
-      const margin = { left: 100, right: 140, top: 60, bottom: 120 };
+      const margin = { left: 80, right: 110, top: 40, bottom: 110 };
 
       const svg = d3.select('svg');
       const width = svg.attr('width');
@@ -85,7 +76,7 @@ Now let's see how hard it is to embed that same D3 code in a Jekyll post.
         	.attr("y", -20)
         	.attr("text-anchor", "middle")
       		.attr('class', 'plotTitle')
-        	.text("Near-Earth Comets: Orbital elements");
+        	.text("Near-Earth Comets");
       
       const xAxisG = g.append('g')
           .attr('transform', `translate(0, ${innerHeight})`)
@@ -93,13 +84,13 @@ Now let's see how hard it is to embed that same D3 code in a Jekyll post.
       const yAxisG = g.append('g')
       		.attr('class', 'axis');
       const colorLegendG = g.append('g')
-          .attr('transform', `translate(${innerWidth*.6}, ${innerHeight+50})`);
+          .attr('transform', `translate(${innerWidth*.4}, ${innerHeight+50})`);
       const radiusLegendG = g.append('g')
       		.attr('transform', `translate(${innerWidth+20}, 20)`);
       
       xAxisG.append('text')
           .attr('class', 'axis-label')
-          .attr('x', innerWidth *.3)
+          .attr('x', innerWidth *.2)
           .attr('y', 60)
           .text(xLabel);
       
@@ -116,7 +107,7 @@ Now let's see how hard it is to embed that same D3 code in a Jekyll post.
       const rScale = d3.scaleSqrt();
       const colorScale = d3.scaleOrdinal()
       	.domain(['Schwassmann-Wachmann 3 fragment', 'Period > 15 yrs', 'Other'])
-      	.range(['#ff3d74','#0080bc','#333']);
+      	.range(['#e31a1c','#1f78b4','#333']);
 
       const xAxis = d3.axisBottom()
         .scale(xScale)
@@ -127,8 +118,7 @@ Now let's see how hard it is to embed that same D3 code in a Jekyll post.
 
       const yAxis = d3.axisLeft()
         .scale(yScale)
-        .ticks(5)
-        .tickPadding(20)
+        .tickPadding(8)
         .tickSize(-innerWidth)
       	.tickValues([0, 30, 60, 90, 120, 150, 180]);
 
@@ -138,8 +128,8 @@ Now let's see how hard it is to embed that same D3 code in a Jekyll post.
 
       const radiusLegend = d3.legendSize()
         .scale(rScale)
-      	.cells([1,5,10,50,100])
-      	.shapePadding(20)
+      	.cells([5,10,50,100])
+      	.shapePadding(25)
         .shape('circle')
       	.labelFormat('0')
       	.title(rLabel);
@@ -159,7 +149,7 @@ Now let's see how hard it is to embed that same D3 code in a Jekyll post.
         return d;
       };
 
-      d3.csv('/data/comets.csv', row, data => {
+      d3.csv('/assets/data/comets.csv', row, data => {
         
         xScale
           .domain([0.5, 1]) // d3.extent(data, xValue))
@@ -194,4 +184,8 @@ Now let's see how hard it is to embed that same D3 code in a Jekyll post.
         		.attr('class','r-legend');
       });
     </script>
-</html>
+</div>
+
+After I plotted this I noticed a bunch of points that seemed to lie on a straight line in this space (red dots). Checking the data showed that these are fragments of [Schwassmann-Wachmann 3](https://en.wikipedia.org/wiki/73P/Schwassmann%E2%80%93Wachmann), a comet that is disintegrating. It's interesting what a visualization can reveal. Before plotting this I'd never heard of this comet. I suspect a simple model of disintegration will explain this. I'd like to come back to this someday.
+
+
