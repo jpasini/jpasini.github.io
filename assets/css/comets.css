@@ -1,0 +1,35 @@
+.tick {
+  font-size: 2em;
+}
+.axis line {
+  stroke: #ddd;
+}
+.axis text {
+  fill: #666;
+}
+.axis-label {
+  fill: #666;
+  font-size: 2em;
+}
+.comet {
+  opacity: 0.3;
+}
+.comet:hover {
+  opacity: 1;
+  fill: #ffa251;
+}
+.schwassmann {
+  opacity: 0.7;
+}
+.long {
+  opacity: 0.4;
+}
+.plotTitle {
+  font-size: 1.5em;
+  fill: #666;
+}
+.color-legend, .r-legend {
+  font-size: 1em;
+  fill: #666;
+}
+

@@ -11,42 +11,7 @@ Here's a scatterplot of near-Earth comets (data source: [NASA](https://data.nasa
 <div>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
-    <style>
-      .tick {
-        font-size: 2em;
-      }
-      .axis line {
-        stroke: #ddd;
-      }
-      .axis text {
-        fill: #666;
-      }
-      .axis-label {
-        fill: #666;
-        font-size: 2em;
-      }
-      .comet {
-        opacity: 0.3;
-      }
-      .comet:hover {
-        opacity: 1;
-        fill: #ffa251;
-      }
-      .schwassmann {
-        opacity: 0.7;
-      }
-      .long {
-        opacity: 0.4;
-      }
-      .plotTitle {
-        font-size: 1.5em;
-        fill: #666;
-      }
-      .color-legend, .r-legend {
-        font-size: 1em;
-        fill: #666;
-      }
-    </style>
+    <link rel="stylesheet" href="/assets/css/comets.css">
     <svg width="700" height="500"></svg>
     <script src="/assets/scripts/comets.js"></script>
 </div>
