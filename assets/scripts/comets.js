@@ -9,49 +9,11 @@ const rLabel = 'Period (yrs)';
 
 const period_limit = 15;
 
-const margin = { left: 80, right: 110, top: 40, bottom: 110 };
+const margin = { left: 100, right: 100, top: 100, bottom: 100 };
 
-
-const chartDiv = document.getElementById("chart");
-const svg = d3.select(chartDiv).append("svg");
-// const svg = d3.select('svg');
-const width = svg.attr('width');
-const height = svg.attr('height');
-const innerWidth = width - margin.left - margin.right;
-const innerHeight = height - margin.top - margin.bottom;
-const g = svg.append('g')
-    .attr('transform', `translate(${margin.left},${margin.top})`);
-
-g.append("text")
-    .attr("x", (innerWidth / 2))             
-    .attr("y", -20)
-    .attr("text-anchor", "middle")
-    .attr('class', 'plotTitle')
-    .text("Near-Earth Comets");
-
-const xAxisG = g.append('g')
-    .attr('transform', `translate(0, ${innerHeight})`)
-    .attr('class', 'axis');
-const yAxisG = g.append('g')
-    .attr('class', 'axis');
-const colorLegendG = g.append('g')
-    .attr('transform', `translate(${innerWidth*.4}, ${innerHeight+50})`);
-const radiusLegendG = g.append('g')
-    .attr('transform', `translate(${innerWidth+20}, 20)`);
-
-xAxisG.append('text')
-    .attr('class', 'axis-label')
-    .attr('x', innerWidth *.2)
-    .attr('y', 60)
-    .text(xLabel);
-
-yAxisG.append('text')
-    .attr('class', 'axis-label')
-    .attr('x', -innerHeight / 2)
-    .attr('y', -60)
-    .attr('transform', `rotate(-90)`)
-    .style('text-anchor', 'middle')
-    .text(yLabel);
+const visualization = d3.select('#visualization');
+const visualizationDiv = visualization.node();
+const svg = visualization.select('svg');
 
 const xScale = d3.scaleLinear();
 const yScale = d3.scaleLinear();
@@ -104,10 +66,13 @@ function dataLoaded(data) {
   function redraw(){
 
     // Extract the width and height that was computed by CSS.
-    const width = chartDiv.clientWidth;
-    const height = chartDiv.clientHeight;
+    const width = visualizationDiv.clientWidth;
+    const aspectRatio = 16/9;
+    const height = visualizationDiv.clientWidth/aspectRatio;
     const centerX = width/2;
     const centerY = height/2;
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
 
     // Use the extracted size to set the size of an SVG element.
     svg
@@ -126,16 +91,75 @@ function dataLoaded(data) {
       .domain([0, d3.max(data, rValue)])
       .range([0, 35]);
 
-    g.selectAll('circle').data(data)
+    let g = svg.selectAll('.visgroup').data([null]);
+    g = g
+      .enter().append('g')
+        .attr('class', 'visgroup')
+      .merge(g)
+        .attr('transform', `translate(${margin.left},${margin.top})`);
+
+    let xAxisG = g.selectAll('.xaxisgroup').data([null]);
+    xAxisG = xAxisG
+      .enter().append('g')
+        .attr('class', 'xaxisgroup axis')
+      .merge(xAxisG)
+        .attr('transform', `translate(0, ${innerHeight})`);
+
+    let yAxisG = g.selectAll('.yaxisgroup').data([null]);
+    yAxisG = yAxisG
+      .enter().append('g')
+        .attr('class', 'yaxisgroup axis');
+
+    let colorLegendG = g.selectAll('.colorlegendgroup').data([null]);
+    colorLegendG = colorLegendG
+      .enter().append('g')
+        .attr('class', 'colorlegendgroup')
+      .merge(colorLegendG)
+        .attr('transform', `translate(${innerWidth*.4}, ${innerHeight+50})`);
+
+    let radiusLegendG = g.selectAll('.radiuslegendgroup').data([null]);
+    radiusLegendG = radiusLegendG
+      .enter().append('g')
+        .attr('class', 'radiuslegendgroup')
+      .merge(radiusLegendG)
+        .attr('transform', `translate(${innerWidth+20}, 20)`);
+
+    let xAxisLabel = xAxisG.selectAll('.axis-label').data([xLabel]);
+    xAxisLabel = xAxisLabel
+      .enter().append('text')
+        .attr('class', 'axis-label')
+        .text(d => d)
+      .merge(xAxisLabel)
+        .attr('x', innerWidth *.2)
+        .attr('y', 60);
+
+    let yAxisLabel = yAxisG.selectAll('.axis-label').data([yLabel]);
+    yAxisLabel = yAxisLabel
+      .enter().append('text')
+        .attr('class', 'axis-label')
+        .text(d => d)
+      .merge(yAxisLabel)
+        .attr('x', -innerHeight / 2)
+        .attr('y', -60)
+        .attr('transform', `rotate(-90)`)
+        .style('text-anchor', 'middle');
+
+    let circles = g.selectAll('circle').data(data);
+    circles = circles
       .enter().append('circle')
         .attr('class', d => d.class)
+      .merge(circles)
         .attr('cx', d => xScale(xValue(d)))
         .attr('cy', d => yScale(yValue(d)))
         .attr('r', d => rScale(rValue(d)))
-        .attr('fill', d => colorScale(colorValue(d)))
+        .attr('fill', d => colorScale(colorValue(d)));
+
+    /*
+    circles.enter()
       .append('title')
         .text(d => d.Object + '\n'
               + 'period: ' + d['P (yr)'] + ' years');
+              */
     
     xAxisG.call(xAxis);
     yAxisG.call(yAxis);

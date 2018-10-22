@@ -13,7 +13,9 @@ Here's a scatterplot of near-Earth comets (data source: [NASA](https://data.nasa
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 <link rel="stylesheet" href="/assets/css/comets.css">
-<div id="chart"></div>
+<div id="visualization">
+  <svg></svg>
+</div>
 <script src="/assets/scripts/comets.js"></script>
 
 After I plotted this I noticed a bunch of points that seemed to lie on a straight line in this space (red dots). Checking the data showed that these are fragments of [Schwassmann-Wachmann 3](https://en.wikipedia.org/wiki/73P/Schwassmann%E2%80%93Wachmann), a comet that is disintegrating. It's interesting what a visualization can reveal: before plotting this I'd never heard of this comet. I suspect a simple model of disintegration will explain it. 
