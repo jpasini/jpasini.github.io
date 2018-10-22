@@ -11,7 +11,10 @@ const period_limit = 15;
 
 const margin = { left: 80, right: 110, top: 40, bottom: 110 };
 
-const svg = d3.select('svg');
+
+const chartDiv = document.getElementById("chart");
+const svg = d3.select(chartDiv).append("svg");
+// const svg = d3.select('svg');
 const width = svg.attr('width');
 const height = svg.attr('height');
 const innerWidth = width - margin.left - margin.right;
@@ -97,37 +100,56 @@ const row = d => {
   return d;
 };
 
-d3.csv('/assets/data/comets.csv', row, data => {
-  
-  xScale
-    .domain([0.5, 1]) // d3.extent(data, xValue))
-    .range([0, innerWidth])
-    .nice();
+function dataLoaded(data) {
+  function redraw(){
 
-  yScale
-    .domain([0, 180]) //d3.extent(data, yValue))
-    .range([innerHeight, 0]);
+    // Extract the width and height that was computed by CSS.
+    const width = chartDiv.clientWidth;
+    const height = chartDiv.clientHeight;
+    const centerX = width/2;
+    const centerY = height/2;
 
-  rScale
-    .domain([0, d3.max(data, rValue)])
-    .range([0, 35]);
+    // Use the extracted size to set the size of an SVG element.
+    svg
+      .attr("width", width)
+      .attr("height", height);
+    xScale
+      .domain([0.5, 1]) // d3.extent(data, xValue))
+      .range([0, innerWidth])
+      .nice();
 
-  g.selectAll('circle').data(data)
-    .enter().append('circle')
-      .attr('class', d => d.class)
-      .attr('cx', d => xScale(xValue(d)))
-      .attr('cy', d => yScale(yValue(d)))
-      .attr('r', d => rScale(rValue(d)))
-      .attr('fill', d => colorScale(colorValue(d)))
-    .append('title')
-      .text(d => d.Object + '\n'
-            + 'period: ' + d['P (yr)'] + ' years');
-  
-  xAxisG.call(xAxis);
-  yAxisG.call(yAxis);
-  colorLegendG.call(colorLegend)
-      .attr('class', 'color-legend');
+    yScale
+      .domain([0, 180]) //d3.extent(data, yValue))
+      .range([innerHeight, 0]);
 
-  radiusLegendG.call(radiusLegend)
-      .attr('class','r-legend');
-});
+    rScale
+      .domain([0, d3.max(data, rValue)])
+      .range([0, 35]);
+
+    g.selectAll('circle').data(data)
+      .enter().append('circle')
+        .attr('class', d => d.class)
+        .attr('cx', d => xScale(xValue(d)))
+        .attr('cy', d => yScale(yValue(d)))
+        .attr('r', d => rScale(rValue(d)))
+        .attr('fill', d => colorScale(colorValue(d)))
+      .append('title')
+        .text(d => d.Object + '\n'
+              + 'period: ' + d['P (yr)'] + ' years');
+    
+    xAxisG.call(xAxis);
+    yAxisG.call(yAxis);
+    colorLegendG.call(colorLegend)
+        .attr('class', 'color-legend');
+
+    radiusLegendG.call(radiusLegend)
+        .attr('class','r-legend');
+  }
+  // Draw for the first time to initialize.
+  redraw();
+
+  // Redraw based on the new size whenever the browser window is resized.
+  window.addEventListener("resize", redraw);
+}
+
+d3.csv('/assets/data/comets.csv', row, dataLoaded);
