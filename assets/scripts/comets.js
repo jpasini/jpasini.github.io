@@ -108,13 +108,13 @@ function dataLoaded(data) {
     let yAxisG = g.selectAll('.yaxisgroup').data([null]);
     yAxisG = yAxisG
       .enter().append('g')
-        .attr('class', 'yaxisgroup axis');
+        .attr('class', 'yaxisgroup axis')
+      .merge(yAxisG);
 
     let colorLegendG = g.selectAll('.color-legend').data([null]);
-    let colorLegendGEnter = colorLegendG
+    colorLegendG = colorLegendG
       .enter().append('g')
-        .attr('class', 'color-legend');
-    colorLegendG = colorLegendGEnter
+        .attr('class', 'color-legend')
       .merge(colorLegendG)
         .attr('transform', `translate(${innerWidth*.4}, ${innerHeight+50})`);
 
@@ -168,7 +168,7 @@ function dataLoaded(data) {
     
     xAxisG.call(xAxis);
     yAxisG.call(yAxis);
-    colorLegendGEnter.call(colorLegend);
+    colorLegendG.call(colorLegend);
 
     radiusLegendG.call(radiusLegend);
   }
