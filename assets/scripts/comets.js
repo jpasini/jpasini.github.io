@@ -9,7 +9,7 @@ const rLabel = 'Period (yrs)';
 
 const period_limit = 15;
 
-const margin = { left: 100, right: 100, top: 100, bottom: 100 };
+const margin = { left: 100, right: 100, top: 20, bottom: 100 };
 
 const visualization = d3.select('#visualization');
 const visualizationDiv = visualization.node();
@@ -111,9 +111,10 @@ function dataLoaded(data) {
         .attr('class', 'yaxisgroup axis');
 
     let colorLegendG = g.selectAll('.colorlegendgroup').data([null]);
-    colorLegendG = colorLegendG
+    let colorLegendGEnter = colorLegendG
       .enter().append('g')
-        .attr('class', 'colorlegendgroup')
+        .attr('class', 'colorlegendgroup');
+    colorLegendG = colorLegendGEnter
       .merge(colorLegendG)
         .attr('transform', `translate(${innerWidth*.4}, ${innerHeight+50})`);
 
@@ -144,26 +145,30 @@ function dataLoaded(data) {
         .attr('transform', `rotate(-90)`)
         .style('text-anchor', 'middle');
 
-    let circles = g.selectAll('circle').data(data);
-    circles = circles
+
+    const dataG = g.selectAll('.datagroup').data([null])
+      .enter().append('g')
+        .attr('class', 'datagroup');
+    let circles = dataG.selectAll('circle').data(data);
+    let circlesEnter = circles
       .enter().append('circle')
-        .attr('class', d => d.class)
+        .attr('class', d => d.class);
+    circles = circlesEnter
       .merge(circles)
         .attr('cx', d => xScale(xValue(d)))
         .attr('cy', d => yScale(yValue(d)))
         .attr('r', d => rScale(rValue(d)))
         .attr('fill', d => colorScale(colorValue(d)));
-
-    /*
-    circles.enter()
+    // add the tooltip
+    circlesEnter
       .append('title')
         .text(d => d.Object + '\n'
               + 'period: ' + d['P (yr)'] + ' years');
-              */
+
     
     xAxisG.call(xAxis);
     yAxisG.call(yAxis);
-    colorLegendG.call(colorLegend)
+    colorLegendGEnter.call(colorLegend)
         .attr('class', 'color-legend');
 
     radiusLegendG.call(radiusLegend)
