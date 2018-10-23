@@ -4,12 +4,11 @@ const rValue = d => d['P (yr)'];
 const colorValue = d => d.type;
 
 const xLabel = 'Eccentricity';
-const yLabel = 'Inclination to ecliptic (degrees)';
+const yLabel = 'Inclination (deg)';
 const rLabel = 'Period (yrs)';
 
 const period_limit = 15;
 
-const margin = { left: 100, right: 110, top: 20, bottom: 110 };
 
 const visualization = d3.select('#visualization');
 const visualizationDiv = visualization.node();
@@ -69,8 +68,11 @@ function dataLoaded(data) {
     const width = visualizationDiv.clientWidth;
     const aspectRatio = 16/9;
     const height = visualizationDiv.clientWidth/aspectRatio;
-    const centerX = width/2;
-    const centerY = height/2;
+
+    const fontSize = Math.min(width/25, 20);
+
+    const margin = { left: 4*fontSize, right: 6*fontSize, top: 0.5*fontSize, bottom: 6*fontSize };
+
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -83,13 +85,23 @@ function dataLoaded(data) {
       .range([0, innerWidth])
       .nice();
 
+    xAxis
+      .tickSize(-innerHeight);
+
     yScale
       .domain([0, 180]) //d3.extent(data, yValue))
       .range([innerHeight, 0]);
 
+    yAxis
+      .tickSize(-innerWidth);
+
     rScale
       .domain([0, d3.max(data, rValue)])
-      .range([0, 35]);
+      .range([0, width*width/20000]);
+
+    radiusLegend
+      .scale(rScale)
+      .shapePadding(width/40);
 
     let g = svg.selectAll('.visgroup').data([null]);
     g = g
@@ -103,13 +115,15 @@ function dataLoaded(data) {
       .enter().append('g')
         .attr('class', 'xaxisgroup axis')
       .merge(xAxisG)
+        .style('font-size', fontSize)
         .attr('transform', `translate(0, ${innerHeight})`);
 
     let yAxisG = g.selectAll('.yaxisgroup').data([null]);
     yAxisG = yAxisG
       .enter().append('g')
         .attr('class', 'yaxisgroup axis')
-      .merge(yAxisG);
+      .merge(yAxisG)
+        .style('font-size', fontSize);
 
     let colorLegendG = g.selectAll('.color-legend').data([null]);
     colorLegendG = colorLegendG
@@ -140,8 +154,9 @@ function dataLoaded(data) {
         .attr('class', 'axis-label')
         .text(d => d)
       .merge(yAxisLabel)
+        .style('font-size', fontSize)
         .attr('x', -innerHeight / 2)
-        .attr('y', -60)
+        .attr('y', -fontSize*2.6)
         .attr('transform', `rotate(-90)`)
         .style('text-anchor', 'middle');
 

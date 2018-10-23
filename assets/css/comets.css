@@ -9,7 +9,6 @@
 }
 
 .tick {
-  font-size: 2em;
 }
 .axis line {
   stroke: #ddd;
@@ -19,7 +18,6 @@
 }
 .axis-label {
   fill: #666;
-  font-size: 2em;
 }
 .comet {
   opacity: 0.3;
@@ -39,7 +37,6 @@
   fill: #666;
 }
 .color-legend, .r-legend {
-  font-size: 1em;
   fill: #666;
 }
 
