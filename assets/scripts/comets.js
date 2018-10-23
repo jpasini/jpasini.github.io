@@ -9,7 +9,7 @@ const rLabel = 'Period (yrs)';
 
 const period_limit = 15;
 
-const margin = { left: 100, right: 100, top: 20, bottom: 100 };
+const margin = { left: 100, right: 110, top: 20, bottom: 110 };
 
 const visualization = d3.select('#visualization');
 const visualizationDiv = visualization.node();
@@ -110,18 +110,18 @@ function dataLoaded(data) {
       .enter().append('g')
         .attr('class', 'yaxisgroup axis');
 
-    let colorLegendG = g.selectAll('.colorlegendgroup').data([null]);
+    let colorLegendG = g.selectAll('.color-legend').data([null]);
     let colorLegendGEnter = colorLegendG
       .enter().append('g')
-        .attr('class', 'colorlegendgroup');
+        .attr('class', 'color-legend');
     colorLegendG = colorLegendGEnter
       .merge(colorLegendG)
         .attr('transform', `translate(${innerWidth*.4}, ${innerHeight+50})`);
 
-    let radiusLegendG = g.selectAll('.radiuslegendgroup').data([null]);
+    let radiusLegendG = g.selectAll('.r-legend').data([null]);
     radiusLegendG = radiusLegendG
       .enter().append('g')
-        .attr('class', 'radiuslegendgroup')
+        .attr('class', 'r-legend')
       .merge(radiusLegendG)
         .attr('transform', `translate(${innerWidth+20}, 20)`);
 
@@ -168,11 +168,9 @@ function dataLoaded(data) {
     
     xAxisG.call(xAxis);
     yAxisG.call(yAxis);
-    colorLegendGEnter.call(colorLegend)
-        .attr('class', 'color-legend');
+    colorLegendGEnter.call(colorLegend);
 
-    radiusLegendG.call(radiusLegend)
-        .attr('class','r-legend');
+    radiusLegendG.call(radiusLegend);
   }
   // Draw for the first time to initialize.
   redraw();
