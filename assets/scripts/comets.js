@@ -146,9 +146,12 @@ function dataLoaded(data) {
         .style('text-anchor', 'middle');
 
 
-    const dataG = g.selectAll('.datagroup').data([null])
+    let dataG = g.selectAll('.datagroup').data([null]);
+    dataG = dataG
       .enter().append('g')
-        .attr('class', 'datagroup');
+        .attr('class', 'datagroup')
+      .merge(dataG);
+
     let circles = dataG.selectAll('circle').data(data);
     let circlesEnter = circles
       .enter().append('circle')
