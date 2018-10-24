@@ -66,10 +66,10 @@ function dataLoaded(data) {
 
     // Extract the width and height that was computed by CSS.
     const width = visualizationDiv.clientWidth;
-    const aspectRatio = 1.2; // 16/9;
+    const aspectRatio = 1.5; // 16/9;
     const height = visualizationDiv.clientWidth/aspectRatio;
 
-    const fontSize = Math.min(width/25, 20);
+    const fontSize = Math.min(width/22, 18);
 
     const margin = { left: 4*fontSize, right: fontSize, top: 5*fontSize, bottom: 3*fontSize };
 
@@ -101,7 +101,7 @@ function dataLoaded(data) {
 
     radiusLegend
       .scale(rScale)
-      .shapePadding(fontSize)
+      .shapePadding(0.8*fontSize)
       .labelOffset(fontSize);
 
     colorLegend
