@@ -18,7 +18,7 @@ const xScale = d3.scaleLinear();
 const yScale = d3.scaleLinear();
 const rScale = d3.scaleSqrt();
 const colorScale = d3.scaleOrdinal()
-  .domain(['Schwassmann-Wachmann 3 fragment', 'Period > 15 yrs', 'Other'])
+  .domain(['S-W 3 fragment', 'Period > 15 yrs', 'Other'])
   .range(['#e31a1c','#1f78b4','#333']);
 
 const xAxis = d3.axisBottom()
@@ -41,9 +41,9 @@ const colorLegend = d3.legendColor()
 const radiusLegend = d3.legendSize()
   .scale(rScale)
   .cells([5,10,50,100])
-  .shapePadding(25)
   .shape('circle')
   .labelFormat('0')
+  .orient('horizontal')
   .title(rLabel);
 
 const row = d => {
@@ -57,7 +57,7 @@ const row = d => {
   d['Epoch (TDB)'] = +d['Epoch (TDB)'];
   d['Node (deg)'] = +d['Node (deg)'];
   d.class = d.Object.startsWith('73P/Schwassmann') ? 'comet schwassmann' :  d['P (yr)'] > period_limit ?  'comet long' :  'comet';
-  d.type = d.Object.startsWith('73P/Schwassmann') ? 'Schwassmann-Wachmann 3 fragment' :  d['P (yr)'] > period_limit ?  'Period > ' + period_limit + ' yrs' :  'Other';
+  d.type = d.Object.startsWith('73P/Schwassmann') ? 'S-W 3 fragment' :  d['P (yr)'] > period_limit ?  'Period > ' + period_limit + ' yrs' :  'Other';
   return d;
 };
 
@@ -66,12 +66,12 @@ function dataLoaded(data) {
 
     // Extract the width and height that was computed by CSS.
     const width = visualizationDiv.clientWidth;
-    const aspectRatio = 16/9;
+    const aspectRatio = 1.2; // 16/9;
     const height = visualizationDiv.clientWidth/aspectRatio;
 
     const fontSize = Math.min(width/25, 20);
 
-    const margin = { left: 4*fontSize, right: 6*fontSize, top: 0.5*fontSize, bottom: 6*fontSize };
+    const margin = { left: 4*fontSize, right: fontSize, top: 5*fontSize, bottom: 3*fontSize };
 
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -97,11 +97,12 @@ function dataLoaded(data) {
 
     rScale
       .domain([0, d3.max(data, rValue)])
-      .range([0, width*width/20000]);
+      .range([0, fontSize*fontSize*0.07]);
 
     radiusLegend
       .scale(rScale)
-      .shapePadding(width/40);
+      .shapePadding(fontSize)
+      .labelOffset(fontSize);
 
     colorLegend
       .shapeRadius(0.4*fontSize);
@@ -133,14 +134,14 @@ function dataLoaded(data) {
       .enter().append('g')
         .attr('class', 'color-legend')
       .merge(colorLegendG)
-        .attr('transform', `translate(${innerWidth*.4}, ${innerHeight+50})`);
+        .attr('transform', `translate(${innerWidth/2}, ${-3.7*fontSize})`);
 
     let radiusLegendG = g.selectAll('.r-legend').data([null]);
     radiusLegendG = radiusLegendG
       .enter().append('g')
         .attr('class', 'r-legend')
       .merge(radiusLegendG)
-        .attr('transform', `translate(${innerWidth+20}, 20)`);
+        .attr('transform', `translate(${1.5*fontSize}, -${4*fontSize})`);
 
     let xAxisLabel = xAxisG.selectAll('.axis-label').data([xLabel]);
     xAxisLabel = xAxisLabel
@@ -149,7 +150,7 @@ function dataLoaded(data) {
         .text(d => d)
       .merge(xAxisLabel)
         .style('text-align', 'left')
-        .attr('x', 2*fontSize)
+        .attr('x', innerWidth / 2)
         .attr('y', 2.5*fontSize);
 
     let yAxisLabel = yAxisG.selectAll('.axis-label').data([yLabel]);
@@ -190,9 +191,13 @@ function dataLoaded(data) {
     
     xAxisG.call(xAxis);
     yAxisG.call(yAxis);
-    colorLegendG.call(colorLegend);
+    colorLegendG
+      .style('font-size', 0.9*fontSize)
+      .call(colorLegend);
 
-    radiusLegendG.call(radiusLegend);
+    radiusLegendG
+      .style('font-size', 0.9*fontSize)
+      .call(radiusLegend);
   }
   // Draw for the first time to initialize.
   redraw();
