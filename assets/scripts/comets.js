@@ -103,6 +103,9 @@ function dataLoaded(data) {
       .scale(rScale)
       .shapePadding(width/40);
 
+    colorLegend
+      .shapeRadius(0.4*fontSize);
+
     let g = svg.selectAll('.visgroup').data([null]);
     g = g
       .enter().append('g')
@@ -145,8 +148,9 @@ function dataLoaded(data) {
         .attr('class', 'axis-label')
         .text(d => d)
       .merge(xAxisLabel)
-        .attr('x', innerWidth *.2)
-        .attr('y', 60);
+        .style('text-align', 'left')
+        .attr('x', 2*fontSize)
+        .attr('y', 2.5*fontSize);
 
     let yAxisLabel = yAxisG.selectAll('.axis-label').data([yLabel]);
     yAxisLabel = yAxisLabel
@@ -156,7 +160,7 @@ function dataLoaded(data) {
       .merge(yAxisLabel)
         .style('font-size', fontSize)
         .attr('x', -innerHeight / 2)
-        .attr('y', -fontSize*2.6)
+        .attr('y', -fontSize*2.9)
         .attr('transform', `rotate(-90)`)
         .style('text-anchor', 'middle');
 
