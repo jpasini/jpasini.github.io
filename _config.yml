@@ -26,7 +26,8 @@ github_username:  jpasini
 markdown: kramdown
 # worked easily:
 #theme: minima
-remote_theme: yous/whiteglass
+#remote_theme: yous/whiteglass
+remote_theme: jez/tufte-pandoc-jekyll
 #remote_theme: broccolini/swiss
 #theme_color: white
 # did not work:

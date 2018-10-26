@@ -129,6 +129,9 @@ GEM
     jekyll-optional-front-matter (0.3.0)
       jekyll (~> 3.0)
     jekyll-paginate (1.1.0)
+    jekyll-pandoc (2.0.1)
+      jekyll (>= 3.0)
+      pandoc-ruby (~> 2.0, >= 2.0.0)
     jekyll-readme-index (0.2.0)
       jekyll (~> 3.0)
     jekyll-redirect-from (0.14.0)
@@ -211,6 +214,7 @@ GEM
       mini_portile2 (~> 2.3.0)
     octokit (4.13.0)
       sawyer (~> 0.8.0, >= 0.5.3)
+    pandoc-ruby (2.0.2)
     pathutil (0.16.1)
       forwardable-extended (~> 2.6)
     public_suffix (2.0.5)
@@ -234,6 +238,8 @@ GEM
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
     thread_safe (0.3.6)
+    tufte-pandoc-jekyll (0.11.2)
+      jekyll-pandoc (~> 2.0)
     typhoeus (1.3.0)
       ethon (>= 0.9.0)
     tzinfo (1.2.5)
@@ -247,7 +253,7 @@ DEPENDENCIES
   github-pages
   jekyll-archives
   jekyll-feed (~> 0.6)
-  jekyll-theme-midnight
+  tufte-pandoc-jekyll
   tzinfo-data
 
 BUNDLED WITH
