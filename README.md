@@ -29,5 +29,8 @@ bundle exec jekyll serve
 
 and it will be located in `localhost:4000`
 
+Note: on Ubuntu this requires *both* the `ruby` and `ruby-dev` packages to be
+installed.
+
 
 
