@@ -12,7 +12,8 @@ bundle install
 ```
 or, the first time,
 ```
-bundle install --path vendor/bundle
+bundle config set --local path 'vendor/bundle'
+bundle install
 ```
 
 This installs locally all dependencies and also creates `Gemfile.lock` with the
